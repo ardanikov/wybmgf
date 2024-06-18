@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sikrett</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            keyframes: {
+              slideIn: {
+                "0%": { transform: "translateY(100%)", opacity: 0 },
+                "100%": { transform: "translateY(0)", opacity: 1 },
+              },
+              slideOut: {
+                "0%": { transform: "translateY(0)", opacity: 1 },
+                "100%": { transform: "translateY(-100%)", opacity: 0 },
+              },
+              typingStart: {
+                "0%": { width: "0%", visibility: "hidden" },
+                "100%": { width: "100%", visibility: "visible" },
+              },
+              typingEnd: {
+                "0%": { width: "100%", visibility: "visible" },
+                "100%": { width: "0%", visibility: "hidden" },
+              },
+              blink: {
+                "50%": {
+                  borderColor: "transparent",
+                },
+                "100%": {
+                  borderColor: "white",
+                },
+              },
+            },
+            animation: {
+              typingStart: "typingStart 2s steps(20) forwards",
+              typingEnd: "typingEnd 2s steps(20) 1s backwards",
+              blink: "blink .7s infinite",
+              slideIn: "slideIn 1s forwards",
+              slideOut: "slideOut 1s forwards",
+            },
+          },
+        },
+        plugins: [],
+      };
+    </script>
+  </head>
+  <body>
+    <div class="main-container grid w-screen h-screen">
+      <container id="glass">
+        <div
+          class="glass"
+          style="
+            width: 178px;
+            height: 199px;
+            top: 537px;
+            left: 306px;
+            transform: rotate(0.841916turn);
+            opacity: 0.1;
+          "
+        ></div>
+        <div
+          class="glass"
+          style="
+            width: 150px;
+            height: 200px;
+            top: 950px;
+            left: 30px;
+            transform: rotate(0.775793turn);
+            opacity: 0.1;
+          "
+        ></div>
+        <div
+          class="glass"
+          style="
+            width: 200px;
+            height: 130px;
+            top: 150px;
+            left: 30px;
+            transform: rotate(0.775793turn);
+            opacity: 0.1;
+          "
+        ></div>
+        <div
+          class="glass"
+          style="
+            width: 150px;
+            height: 200px;
+            top: -100px;
+            left: 360px;
+            transform: rotate(0.45turn);
+            opacity: 0.1;
+          "
+        ></div>
+      </container>
+      <div class="text-container grid place-content-center w-screen h-screen">
+        <div
+          id="typingContainer"
+          class="flex w-auto pl-2 border-l-2 border-primary h-auto"
+        >
+          <div id="animatedText w-full" class="flex">
+            <span class="word text-6xl font-bold">Will</span>
+            <span class="word text-6xl font-bold">You</span>
+            <span class="word text-6xl font-bold">Be</span>
+            <span class="word text-6xl font-bold">My</span>
+            <span class="word text-6xl font-bold">Girlfriend ???</span>
+          </div>
+          <h1
+            id="sopiRahayu"
+            class="overflow-hidden whitespace-nowrap text-6xl font-bold animate-blink"
+          >
+            Sopi Rahayu
+          </h1>
+          <div
+            id="cursor"
+            class="border-r-2 border-r-white w-2 h-full animate-blink"
+          ></div>
+        </div>
+        <button
+          type="button"
+          id="yesButton"
+          class="vis-hidden mt-10 mx-auto rounded-md w-2/5 h-12 border border-1 border-primary font-semibold"
+        >
+          Yes !
+        </button>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const yesButton = document.getElementById("yesButton");
+        //Second phase
+        const words = document.querySelectorAll(".word");
+        let index = 0;
+
+        function animateWords() {
+          if (index < words.length - 1) {
+            const currentWord = words[index];
+            const nextWord = words[index + 1];
+
+            currentWord.classList.add("animate-slideOut");
+            nextWord.classList.add("animate-slideIn");
+            nextWord.style.opacity = 1;
+
+            currentWord.addEventListener(
+              "animationend",
+              () => {
+                currentWord.classList.remove("animate-slideOut");
+                currentWord.style.opacity = 0;
+              },
+              { once: true }
+            );
+
+            nextWord.addEventListener(
+              "animationend",
+              () => {
+                nextWord.classList.remove("animate-slideIn");
+                index++;
+                setTimeout(animateWords, 1000); // Adjust the delay as needed
+              },
+              { once: true }
+            );
+          } else {
+            // Last word animation
+            const lastWord = words[index];
+            lastWord.style.opacity = 1;
+
+            // Add your logic here for after the last word appears
+            setTimeout(() => {
+              // Remove any class or perform any action here
+              yesButton.classList.remove("vis-hidden");
+            }, 2000); // Adjust the delay as needed
+          }
+        }
+
+        const typingDiv = document.getElementById("sopiRahayu");
+        const cursor = document.getElementById("cursor");
+        const typingContainer = document.getElementById("typingContainer");
+
+        // Apply the first phase of the animation
+        typingDiv.classList.add("animate-typingStart");
+        typingDiv.classList.add("animate-blink");
+
+        // Add an event listener for the end of the first animation
+        typingDiv.addEventListener("animationend", (event) => {
+          if (event.animationName === "typingStart") {
+            // After a delay, apply the second phase of the animation
+            setTimeout(() => {
+              typingDiv.classList.remove("animate-typingStart");
+              typingDiv.classList.add("animate-typingEnd");
+            }, 1000); // 1 second delay
+          }
+          if (event.animationName === "typingEnd") {
+            typingContainer.classList.remove("border-l-2");
+            typingDiv.classList.add("opacity-0");
+            cursor.classList.add("vis-hidden");
+            words[0].classList.add("animate-slideIn");
+            words[0].style.opacity = 1;
+
+            words[0].addEventListener(
+              "animationend",
+              () => {
+                words[0].classList.remove("animate-slideIn");
+                setTimeout(animateWords, 1000); // Initial delay before starting the animation
+              },
+              { once: true }
+            );
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

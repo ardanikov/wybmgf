@@ -1,0 +1,35 @@
+html,
+body {
+  background-color: #0d0901;
+  overflow: hidden;
+}
+* {
+  font-family: "Poppins", sans-serif;
+  color: #d60bbe;
+}
+.vis-hidden {
+  visibility: hidden;
+}
+
+#animatedText {
+  position: relative;
+  height: 2em; /* Adjust based on your text size */
+  overflow: hidden;
+}
+.word {
+  position: absolute;
+  opacity: 0;
+}
+
+.border-primary {
+  border-color: #d60bbe;
+}
+.glass {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
